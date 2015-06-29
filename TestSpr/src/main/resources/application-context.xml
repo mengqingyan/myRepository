@@ -3,36 +3,47 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:p="http://www.springframework.org/schema/p"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
-
-	<bean id="userService" class="com.revencoft.example.service.impl.UserServiceImpl" 
-		p:userId="0"/>
-	<bean id="userService2" class="com.revencoft.example.service.impl.UserServiceImpl" 
-		p:userId="2"/>
-		
-	<bean id="bankService" class="com.revencoft.example.service.impl.BankServiceImpl" 
-		p:bankId="0"/>
-	<bean id="bankService2" class="com.revencoft.example.service.impl.BankServiceImpl" 
-		p:bankId="2"/>
-
-	<bean id="userLogAdvice" class="com.revencoft.example.advice.UserLogAdvice"/>
-
-	<bean id="swapper" class="org.springframework.aop.target.HotSwappableTargetSource">
-		<constructor-arg>
-			<ref local="userService" />
-		</constructor-arg>
-	</bean>
-
-	<bean id="swappable" class="org.springframework.aop.framework.ProxyFactoryBean">
-		<property name="targetSource">
-			<ref local="swapper" />
-		</property>
-		<property name="interceptorNames">
-			<value>userLogAdvice</value>
-		</property>
-	</bean>
-	
 	<context:component-scan base-package="com.revencoft.example"/>
+	<aop:aspectj-autoproxy proxy-target-class="true"/>
+	<import resource="application-hystrix-aspect.xml"/>
+
+	<beans profile="swappable">
+		<bean id="userService" class="com.revencoft.example.service.impl.UserServiceImpl" 
+			p:userId="0"/>
+		<bean id="userService2" class="com.revencoft.example.service.impl.UserServiceImpl" 
+			p:userId="2"/>
+			
+		<bean id="bankService" class="com.revencoft.example.service.impl.BankServiceImpl" 
+			p:bankId="0"/>
+		<bean id="bankService2" class="com.revencoft.example.service.impl.BankServiceImpl" 
+			p:bankId="2"/>
+	
+		<bean id="userLogAdvice" class="com.revencoft.example.advice.UserLogAdvice"/>
+	
+		<bean id="swapper" class="org.springframework.aop.target.HotSwappableTargetSource">
+			<constructor-arg>
+				<ref local="userService" />
+			</constructor-arg>
+		</bean>
+	
+		<bean id="swappable" class="org.springframework.aop.framework.ProxyFactoryBean">
+			<property name="targetSource">
+				<ref local="swapper" />
+			</property>
+			<property name="interceptorNames">
+				<value>userLogAdvice</value>
+			</property>
+		</bean>
+	</beans>
+	
+	<beans profile="testWS">
+		
+	</beans>
+	
+	
 </beans>
