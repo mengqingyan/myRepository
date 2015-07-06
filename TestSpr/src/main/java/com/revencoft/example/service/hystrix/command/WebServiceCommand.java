@@ -11,14 +11,16 @@ import com.netflix.hystrix.HystrixCommand;
  * @author mengqingyan
  * @version 
  */
-public class OpenAccCommand extends HystrixCommand<Object> {
+public class WebServiceCommand extends HystrixCommand<Object> {
 
 	private ProceedingJoinPoint joinPoint;
+	
+	public static final Object DEFAULT_ERROR_FALLBACK = null;
 
 	/**
 	 * @param setter
 	 */
-	public OpenAccCommand(com.netflix.hystrix.HystrixCommand.Setter setter) {
+	public WebServiceCommand(com.netflix.hystrix.HystrixCommand.Setter setter) {
 		super(setter);
 	}
 
@@ -35,7 +37,7 @@ public class OpenAccCommand extends HystrixCommand<Object> {
 	
 	@Override
 	protected Object getFallback() {
-		return "NULL";
+		return DEFAULT_ERROR_FALLBACK;
 	}
 
 	/**

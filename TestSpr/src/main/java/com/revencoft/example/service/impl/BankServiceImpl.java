@@ -4,7 +4,6 @@
 package com.revencoft.example.service.impl;
 
 import org.apache.log4j.Logger;
-import org.springframework.stereotype.Service;
 
 import com.revencoft.example.service.BankService;
 

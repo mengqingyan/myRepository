@@ -1,10 +1,6 @@
-/**
- * 
- */
 package com.revencoft.example.service.hystrix.aspect;
 
 import java.io.IOException;
-import java.util.Enumeration;
 import java.util.Properties;
 
 import javax.annotation.PostConstruct;
@@ -16,7 +12,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
-import org.springframework.stereotype.Component;
 
 import com.netflix.hystrix.HystrixCommand.Setter;
 import com.netflix.hystrix.HystrixCommandGroupKey;
@@ -25,7 +20,7 @@ import com.netflix.hystrix.HystrixCommandProperties;
 import com.netflix.hystrix.HystrixCommandProperties.ExecutionIsolationStrategy;
 import com.netflix.hystrix.HystrixThreadPoolProperties;
 import com.revencoft.example.service.hystrix.command.CommandProperty;
-import com.revencoft.example.service.hystrix.command.OpenAccCommand;
+import com.revencoft.example.service.hystrix.command.WebServiceCommand;
 
 /**
  * @author mengqingyan
@@ -34,11 +29,10 @@ import com.revencoft.example.service.hystrix.command.OpenAccCommand;
 
 //@Component
 @Aspect
-public class OpenAccHystrixAspect {
+public class WebServiceHystrixAspect {
 	
 	private final Logger log = Logger.getLogger(getClass());
 
-//	private OpenAccCommand command;
 	
 	private Setter commandConfig;
 	private boolean isolateThreadPool = true;
@@ -46,12 +40,12 @@ public class OpenAccHystrixAspect {
 	private Properties hystrixProperties;
 	
 	@Pointcut("@annotation(com.revencoft.example.annotation.Hystrix)")
-	public void openAccHystrixPoint(){}
+	public void wsHystrixPoint(){}
 	
-	@Around("openAccHystrixPoint()")
+	@Around("wsHystrixPoint()")
 	public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
 		log.info("begin command....");
-		OpenAccCommand command = new OpenAccCommand(commandConfig);
+		WebServiceCommand command = new WebServiceCommand(commandConfig);
 		command.setJoinPoint(joinPoint);
 		return command.execute();
 	}

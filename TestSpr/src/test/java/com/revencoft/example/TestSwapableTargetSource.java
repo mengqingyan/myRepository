@@ -3,10 +3,8 @@
  */
 package com.revencoft.example;
 
-import org.aopalliance.aop.Advice;
 import org.apache.log4j.Logger;
 import org.junit.Test;
-import org.springframework.aop.framework.AdvisedSupport;
 import org.springframework.aop.target.HotSwappableTargetSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
