@@ -24,7 +24,7 @@ public class WeatherWebService {
 	private WeatherWS fs = new WeatherWSLocator();
 	
 	@Hystrix
-	@TimerLog(LEVEL.info)
+	@TimerLog(LEVEL.DEBUG)
 	public String[] getWeather(String theCityCode, String theUserID) throws Exception {
 		WeatherWSSoap soap = fs.getWeatherWSSoap();
 		return soap.getWeather(theCityCode, theUserID);

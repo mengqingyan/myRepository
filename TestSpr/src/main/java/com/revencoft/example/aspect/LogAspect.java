@@ -7,7 +7,6 @@ import java.lang.reflect.Method;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.apache.log4j.Priority;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -37,7 +36,7 @@ public class LogAspect {
 	
 	@Around("timerLog()")
 	public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
-		
+
 		MethodSignature methodSig = (MethodSignature) joinPoint.getSignature();
 		Method method = methodSig.getMethod();
 		TimerLog timerLog = method.getAnnotation(TimerLog.class);
@@ -54,25 +53,31 @@ public class LogAspect {
 	 */
 	private Object proccedWithLog(TimerLog timerLog,
 			ProceedingJoinPoint joinPoint, Method method) throws Throwable {
-		Priority priority = null;
+		Level priority = null;
 		LEVEL value = timerLog.value();
 		switch (value) {
-		case debug:
+		case DEBUG:
 			priority = Level.DEBUG;
 			break;
-		case info:
+		case INFO:
 			priority = Level.INFO;
 			break;
-		case warn:
+		case WARN:
 			priority = Level.WARN;
 			break;
-		case error:
+		case ERROR:
 			priority = Level.ERROR;
 			break;
 		default:
 			priority = Level.DEBUG;
 		}
 		Object[] args = joinPoint.getArgs();
+		
+		Level logLevel = log.getEffectiveLevel();
+		if(logLevel.toInt() > priority.toInt()) {
+			return joinPoint.proceed(args);
+		}
+		
 		long start = System.currentTimeMillis();
 
 		Object result = joinPoint.proceed(args);

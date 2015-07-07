@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
 @Target(value = { ElementType.METHOD })
 public @interface TimerLog {
 	
-	public LEVEL value() default LEVEL.debug;
+	public LEVEL value() default LEVEL.DEBUG;
 	
 	/**
 	 * 打印级别
@@ -22,6 +22,6 @@ public @interface TimerLog {
 	 * @version
 	 */
 	public enum LEVEL {
-		error,warn,info,debug
+		ERROR,WARN,INFO,DEBUG
 	}
 }
