@@ -37,11 +37,19 @@ public abstract class BaseAction extends ActionSupport{
 	}
 
 	protected HttpSession getSession() {
-		return ServletActionContext.getRequest().getSession();
+		return getSession(true);
+	}
+	
+	protected HttpSession getSession(boolean create) {
+		return ServletActionContext.getRequest().getSession(create);
+	}
+	
+	protected void sessionSave(String name, Object value) {
+		getSession().setAttribute(name, value);
 	}
 
 	protected void requestSave(String name, Object obj) {
-		ServletActionContext.getRequest().setAttribute(name, obj);
+		getRequest().setAttribute(name, obj);
 	}
 	
 	public String getErrorMsg() {

@@ -47,13 +47,14 @@ public class UserManageAction extends BaseAction {
 			return LOGIN;
 		}
 		if(userService.containsUser(user)) {
-			HttpSession session = ServletActionContext.getRequest().getSession(true);
-			session.setAttribute(ValidationConstant.sessionUserTokenKey, user.getUsername());
+			sessionSave(ValidationConstant.sessionUserTokenKey, user.getUsername());
 			return SUCCESS;
 		}
 		return LOGIN;
 	}
 	
+	
+
 	public String doLogout() throws Exception {
 		HttpSession session = ServletActionContext.getRequest().getSession(false);
 		if(session != null) {
