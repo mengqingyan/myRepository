@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	
+	<import resource="classpath:applicationContext-interceptor.xml"/>
+
+	<bean id="customAnnotationAuthValid" parent="annotationValid">
+		<!-- 	cacheableAuthAnnoDecider（注解配置资源对应权限信息，基于缓存，更高效）,
+		 		authAnnoDecider（注解配置资源对应权限信息）,
+		 		autoAuthenticationDecider(用于在数据库中配置资源对应的权限信息) （默认）
+		 		三选一 
+		 -->
+		 <!-- 需要更改时，配置以下属性，通常不需要 -->
+		<property name="authDecider" ref="cacheableAuthAnnoDecider"/>
+	</bean>   
+	
+</beans>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+
+<struts>
+
+	<constant name="struts.devMode" value="false" />
+	<constant name="struts.action.extension" value="php" />
+	<constant name="struts.configuration.xml.reload" value="true"/>
+	<constant name="struts.custom.i18n.resources" value="messages"/>
+	<!-- <constant name="struts.ui.theme" value="simple" /> -->
+
+	<!-- 指定允许上传的文件最大字节数。默认值是2097152(2M) -->
+	<constant name="struts.multipart.maxSize" value="1045956" />
+	
+	<include file="struts-authExample.xml"></include>
+
+	<package name="base" namespace="/" extends="struts-default">
+		<interceptors>
+			<interceptor name="customAnnotationAuthValid" class="customAnnotationAuthValid">
+				<!-- <param name="includeValidationMethods">
+					doLogin
+				</param> -->
+			</interceptor>
+			<!-- <interceptor-stack name="myStack">
+				配置权限拦截器
+				<interceptor-ref name="customAnnotationAuthValid"/>
+				<interceptor-ref name="tokenSession">
+					在action中，需要进行拦截的方法method1,method2
+					<param name="includeMethods"></param>
+				</interceptor-ref>
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack> -->
+			<interceptor-stack name="myDefultStack">
+				<interceptor-ref name="defaultStack" />
+				<!-- 配置权限拦截器 -->
+				<interceptor-ref name="customAnnotationAuthValid"/>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="myDefultStack"/>
+		
+		<global-results>
+			<result name="login">/WEB-INF/jsp/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/error.jsp</result>
+			<result name="validation.error">/WEB-INF/jsp/error.jsp</result>
+		</global-results>
+		
+	</package>
+</struts>
