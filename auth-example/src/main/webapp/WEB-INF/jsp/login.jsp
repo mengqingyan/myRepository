@@ -27,6 +27,7 @@
 			<s:textfield name="user.emp.username" label="职工名"/>
 			<s:textfield name="user.address" label="地址"/>
 			<sec:csrfInput/>
+			<s:token/>
 			<s:submit value="登录"></s:submit>
 		</s:form>
 	</center>

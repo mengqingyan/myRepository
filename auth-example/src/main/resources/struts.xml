@@ -24,19 +24,14 @@
 					doLogin
 				</param> -->
 			</interceptor>
-			<!-- <interceptor-stack name="myStack">
-				配置权限拦截器
-				<interceptor-ref name="customAnnotationAuthValid"/>
-				<interceptor-ref name="tokenSession">
-					在action中，需要进行拦截的方法method1,method2
-					<param name="includeMethods"></param>
-				</interceptor-ref>
-				<interceptor-ref name="defaultStack" />
-			</interceptor-stack> -->
 			<interceptor-stack name="myDefultStack">
 				<interceptor-ref name="defaultStack" />
 				<!-- 配置权限拦截器 -->
 				<interceptor-ref name="customAnnotationAuthValid"/>
+				<interceptor-ref name="tokenSession">
+					<!-- 在action中，需要进行拦截的方法method1,method2 -->
+					<param name="includeMethods">doLogin</param>
+				</interceptor-ref>
 			</interceptor-stack>
 		</interceptors>
 		<default-interceptor-ref name="myDefultStack"/>
@@ -44,6 +39,7 @@
 		<global-results>
 			<result name="login">/WEB-INF/jsp/login.jsp</result>
 			<result name="error">/WEB-INF/jsp/error.jsp</result>
+			<result name="invalid.token">/WEB-INF/jsp/error.jsp</result>
 			<result name="validation.error">/WEB-INF/jsp/error.jsp</result>
 		</global-results>
 		
