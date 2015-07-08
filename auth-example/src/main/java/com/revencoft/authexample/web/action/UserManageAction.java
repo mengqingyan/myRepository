@@ -56,7 +56,7 @@ public class UserManageAction extends BaseAction {
 	
 
 	public String doLogout() throws Exception {
-		HttpSession session = ServletActionContext.getRequest().getSession(false);
+		HttpSession session = getSession(false);
 		if(session != null) {
 			session.invalidate();
 		}

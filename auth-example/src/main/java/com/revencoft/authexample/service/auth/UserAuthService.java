@@ -12,7 +12,7 @@ import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.revencoft.authexample.db.CacheDB;
 import com.revencoft.authexample.db.CacheDB.UserAndAuth;
@@ -27,7 +27,7 @@ import com.revencoft.validation.auth.service.user.grantedauthority.AuthoritiesLo
  * @version 
  */
 
-@Component
+@Service
 public class UserAuthService implements AuthoritiesLoader<Collection<GrantedAuthority>>{
 
 	@Autowired

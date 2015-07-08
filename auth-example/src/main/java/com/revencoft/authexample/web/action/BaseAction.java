@@ -16,10 +16,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
-/**
- * @author mengqingyan
- * @version 
- */
+
 public abstract class BaseAction extends ActionSupport{
 
 	/**
