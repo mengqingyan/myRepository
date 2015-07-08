@@ -42,7 +42,6 @@ public class UserManageAction extends BaseAction {
 	
 	public String doLogin() throws Exception {
 		
-		log.info("begin doLogin!");
 		if(user == null) {
 			return LOGIN;
 		}
