@@ -15,6 +15,8 @@
 		 -->
 		 <!-- 需要更改时，配置以下属性，通常不需要 -->
 		<property name="authDecider" ref="cacheableAuthAnnoDecider"/>
+		<!-- validator(自定义validation)和javaxValidator(javax提供的validation)两者任选其一 -->
+		<property name="validator" ref="validator"/>
 	</bean>   
 	
 </beans>

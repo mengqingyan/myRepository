@@ -12,6 +12,7 @@
 		<div>
 			<h2>error!</h2>
 			<s:actionerror/>
+			
 			<a href="user_logout.php">退出</a>
 		</div>
 	</center>

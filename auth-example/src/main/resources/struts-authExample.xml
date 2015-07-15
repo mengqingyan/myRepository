@@ -27,4 +27,30 @@
 			<result name="success" type="redirectAction">user_toLogin</result>
 		</action>
 	</package>
+	
+	
+	<package name="authExampleWithJavaxValidation" namespace="/javaxValidation" extends="base">
+	
+		<action name="user_toLogin">
+			<result name="success">/WEB-INF/jsp/login.jsp</result>
+		</action>
+		
+		<action name="user_doLogin" class="userManageWithJavaxValidationAction" method="doLogin">
+			<result name="success" type="redirectAction">
+				<param name="actionName">user_accessTest</param>
+				<param name="user.address">${user.address}</param>
+			</result>
+			<result name="validation.error">/WEB-INF/jsp/login.jsp</result>
+		</action>
+		
+		<action name="user_accessTest" class="userManageWithJavaxValidationAction" method="accessTest">
+			<result name="success">/WEB-INF/jsp/accSuccess.jsp</result>
+		</action>
+		
+		<action name="user_logout" class="userManageWithJavaxValidationAction" method="doLogout">
+			<result name="success" type="redirectAction">
+				<param name="actionName">user_toLogin</param>
+			</result>
+		</action>
+	</package>
 </struts>
