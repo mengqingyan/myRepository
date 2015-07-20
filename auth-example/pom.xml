@@ -110,6 +110,9 @@
             <id>mqy-maven-release-repository</id>
             <name>mqy-maven-release-repository</name>
             <url>https://raw.github.com/${git_account}/maven/release</url>
+            <releases>
+            	<enabled>true</enabled>
+            </releases>
         </repository>
     </repositories>
 </project>
