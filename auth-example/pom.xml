@@ -5,7 +5,7 @@
   <artifactId>auth-example</artifactId>
   <packaging>war</packaging>
   <version>0.0.1-SNAPSHOT</version>
-  <name>auth-example Maven Webapp</name>
+  <name>auth-example</name>
   <url>http://maven.apache.org</url>
   
   <developers>
