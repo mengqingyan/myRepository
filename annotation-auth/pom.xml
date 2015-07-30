@@ -1,0 +1,85 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.revencoft</groupId>
+  <artifactId>annotation-auth</artifactId>
+  <version>2.1.RELEASE</version>
+  <packaging>jar</packaging>
+
+  <name>annotation-auth</name>
+  <url></url>
+  
+  <developers>
+    <developer>
+      <id>mqy</id>
+      <name>mengqingyan</name>
+      <email>m_527@qq.com</email>
+    </developer>
+  </developers>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <struts-version>2.3.24</struts-version>
+    <spring-version>4.1.5.RELEASE</spring-version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+    	<groupId>org.apache.struts</groupId>
+    	<artifactId>struts2-core</artifactId>
+    	<version>${struts-version}</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.apache.struts.xwork</groupId>
+    	<artifactId>xwork-core</artifactId>
+    	<version>${struts-version}</version>
+    </dependency>
+    <dependency>
+    	<groupId>log4j</groupId>
+    	<artifactId>log4j</artifactId>
+    	<version>1.2.14</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.springframework</groupId>
+    	<artifactId>spring-expression</artifactId>
+    	<version>${spring-version}</version>
+    </dependency>
+    <dependency>
+    	<groupId>javax.servlet</groupId>
+    	<artifactId>javax.servlet-api</artifactId>
+    	<version>3.1.0</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.springframework</groupId>
+    	<artifactId>spring-beans</artifactId>
+    	<version>${spring-version}</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.springframework</groupId>
+    	<artifactId>spring-web</artifactId>
+    	<version>${spring-version}</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.hibernate</groupId>
+    	<artifactId>hibernate-validator</artifactId>
+    	<version>5.1.3.Final</version>
+    </dependency>
+    <dependency>
+    	<groupId>javax.el</groupId>
+    	<artifactId>javax.el-api</artifactId>
+    	<version>3.0.1-b04</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.eclipse.jetty.orbit</groupId>
+    	<artifactId>com.sun.el</artifactId>
+    	<version>1.0.0.v201105211818</version>
+    </dependency>
+  </dependencies>
+</project>

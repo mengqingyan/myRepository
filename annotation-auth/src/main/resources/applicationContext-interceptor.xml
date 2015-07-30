@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	
+	<!-- ====================================================================== -->
+	
+	<!-- 注解校验+权限控制拦截器 -->
+	<bean id="annotationValid" class="com.revencoft.validation.struts.interceptor.ValidateVOInterceptor">
+		<property name="authDecider" ref="autoAuthenticationDecider"/>
+		<!-- validator和javaxValidator两者任选其一 -->
+		<property name="validator" ref="javaxValidator"/>
+		<property name="exHandler" ref="exHandler"/>
+	</bean>
+	
+	<!-- ====================================================================== -->
+	
+	<!-- 基于自定义验证策略的validator -->
+	<bean id="validator" class="com.revencoft.validation.persistent.validator.RevencoftPropertyValidator">
+		<property name="handlers">
+			<list>
+				<ref local="notEmptyHandler"/>
+				<ref local="regexHandler"/>
+				<ref local="notNullHandler"/>
+				<ref local="imageCodeHandler"/>
+				<ref local="sqlFilterHandler"/>
+				<ref local="maxLengthHandler"/>
+				<ref local="minLengthHandler"/>
+				<ref local="minHandler"/>
+				<ref local="maxHandler"/>
+			</list>
+		</property>
+		<property name="validDecider" ref="validAnnoDecider"/>
+		<property name="objectAnnotationNames">
+			<list>
+				<value type="java.lang.String">com.revencoft.validation.persistent.annotation.SqlFilter</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 基于javax.validation验证策略的validator -->
+	<bean id="javaxValidator" class="com.revencoft.validation.persistent.validator.JavaxPropertyValidator"
+		p:validDecider-ref="validAnnoDecider"
+	/>
+	
+	<!-- ====================================================================== -->
+	
+	<!-- 自定义的注解校验处理器 -->
+    <bean id="notEmptyHandler" class="com.revencoft.validation.persistent.annotation.handler.NotEmptyValidateAnnotationHandler"/>
+    <bean id="regexHandler" class="com.revencoft.validation.persistent.annotation.handler.RegexValidateAnnotationHandler"/>
+    <bean id="notNullHandler" class="com.revencoft.validation.persistent.annotation.handler.NotNullValidateAnnotationHandler"/>
+    <bean id="imageCodeHandler" class="com.revencoft.validation.persistent.annotation.handler.ValidImageCodeAnnotationHandler"/>
+    <bean id="sqlFilterHandler" class="com.revencoft.validation.persistent.annotation.handler.SqlFilterAnnotationHandler"/>
+    <bean id="maxLengthHandler" class="com.revencoft.validation.persistent.annotation.handler.MaxLengthValidateAnnotationHandler"/>
+    <bean id="minLengthHandler" class="com.revencoft.validation.persistent.annotation.handler.MinLengthValidateAnnotationHandler"/>
+    <bean id="minHandler" class="com.revencoft.validation.persistent.annotation.handler.MinValidateAnnotationHandler"/>
+    <bean id="maxHandler" class="com.revencoft.validation.persistent.annotation.handler.MaxValidateAnnotationHandler"/>
+	
+	
+	<!-- ====================================================================== -->
+	
+	 <!-- 验证失败的默认异常处理器 -->
+	 <bean id="exHandler" class="com.revencoft.validation.exception.handler.DefaultValidationExceptionHandler"/>
+	
+	<!-- ====================================================================== -->
+	
+	<!-- 注解判决器 -->
+	<bean id="validAnnoDecider" class="com.revencoft.validation.persistent.annotation.decider.ValidAnnotationDecider"/>
+	
+	<!-- ====================================================================== -->
+	
+	<!-- 以下3选1 -->
+	
+	<!-- 注解类型权限判决器 -->
+	<bean id="cacheableAuthAnnoDecider" class="com.revencoft.validation.auth.decider.annotationdecider.CacheableAuthAnnotationDecider"
+		p:validDecider-ref="validAnnoDecider"
+		p:userAuthoritiesService-ref="authoritiesService"
+	/>
+	<bean id="authAnnoDecider" class="com.revencoft.validation.auth.decider.annotationdecider.AuthAnnotationDecider"
+		p:cacheableAuthenticationDecider-ref="cacheableAuthAnnoDecider"
+		p:validDecider-ref="validAnnoDecider"
+		p:userAuthoritiesService-ref="authoritiesService"
+	/>
+	
+	<!-- 基于注解和数据库配置的权限判决器，自动加载资源所需的权限 -->
+	<bean id="autoAuthenticationDecider" class="com.revencoft.validation.auth.decider.auto.DataBaseAuthenticationDecider"
+		p:userAuthService-ref="authoritiesService"
+		autowire="byType"
+	/>
+	
+	<!-- ====================================================================== -->
+	
+	<!-- 加载用户权限信息service -->
+	<bean id="authoritiesService" class="com.revencoft.validation.auth.service.user.grantedauthority.SessionBasedUserGrantedAuthorityServiceImpl"
+		p:dbService-ref="customUserAuthService"/>
+	
+	<!-- 自定义加载用户权限信息 -->
+	<bean id="customUserAuthService" class="com.revencoft.validation.auth.service.user.grantedauthority.CustomUserGrantedAuthorityServiceImpl" autowire="byType"/>
+	<!-- 
+	自定义加载资源权限信息
+	<bean id="customResourceAuthService" class="com.revencoft.validation.auth.service.resource.grantedauthority.CustomResourceGrantedAuthorityServiceImpl"/>
+	 -->
+	
+</beans>
